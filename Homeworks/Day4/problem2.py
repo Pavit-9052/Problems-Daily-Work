@@ -25,7 +25,7 @@ def print_matrix(matrix):
 
 output = []
 
-for i in range(6):
+for i in range(6):      #To create a 6x6 dimensional array
     row = []
     for j in range(6):
         row.append("*")
@@ -36,11 +36,11 @@ points_B = 0
 print("Initial stage:")
 print_matrix(output)
 
-while points_A < 5 and points_B < 5:
+while points_A < 5 and points_B < 5: #To iterate until the point is 5 when game ends!
     for i in range(1, 3):
         row = dice() - 1
         col = dice() - 1
-        if i == 1:
+        if i == 1:  #Player A's turn
             if output[row][col] == 'B':
                 print(f"Player A has rolled row={row+1} and col={col+1}.")
                 print(f"OOPS! Player A takes Player B's place.")
@@ -51,7 +51,7 @@ while points_A < 5 and points_B < 5:
                 print(f"Player A has rolled row={row+1} and col={col+1}.")
                 output[row][col] = 'A'
                 print_matrix(output)
-        else:
+        else:      #Player B's turn
             if output[row][col] == 'A':
                 print(f"Player B has rolled row={row+1} and col={col+1}.")
                 print(f"OOPS! Player B takes Player A's place.")
