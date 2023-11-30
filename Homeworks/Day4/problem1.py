@@ -6,11 +6,12 @@ Eg- input - I am Sayur
 Output I ma ruyaS
 '''
 
-sentence = input("Enter a sentence:")
-words = sentence.split()
-for word in words:
+def reverse(sentence):
+    words = sentence.split()
+    for word in words:
         print(word[::-1],end=" ")  #print the words in reverse order
-
+sentence = input("Enter a sentence:")
+reverse(sentence)
         
 
 '''
