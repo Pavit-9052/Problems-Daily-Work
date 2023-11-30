@@ -25,7 +25,7 @@ def print_matrix(matrix):
 
 output = []
 
-for i in range(6):      #To create a 6x6 dimensional array
+for i in range(6):
     row = []
     for j in range(6):
         row.append("*")
@@ -36,39 +36,36 @@ points_B = 0
 print("Initial stage:")
 print_matrix(output)
 
-while points_A < 5 and points_B < 5: #To iterate until the point is 5 when game ends!
-    for i in range(1, 3):
-        row = dice() - 1
-        col = dice() - 1
-        if i == 1:  #Player A's turn
-            if output[row][col] == 'B':
-                print(f"Player A has rolled row={row+1} and col={col+1}.")
-                print(f"OOPS! Player A takes Player B's place.")
-                points_A += 1
-                output[row][col] = 'A'
-                print_matrix(output)
-            else:
-                print(f"Player A has rolled row={row+1} and col={col+1}.")
-                output[row][col] = 'A'
-                print_matrix(output)
-        else:      #Player B's turn
-            if output[row][col] == 'A':
-                print(f"Player B has rolled row={row+1} and col={col+1}.")
-                print(f"OOPS! Player B takes Player A's place.")
-                points_B += 1
-                output[row][col] = 'B'
-                print_matrix(output)
-            else:
-                print(f"Player B has rolled row={row+1} and col={col+1}.")
-                output[row][col] = 'B'
-                print_matrix(output)
+def calculate_points(player, matrix, points_A, points_B):
+    row = dice() - 1
+    col = dice() - 1
 
-    print(f"Total points for Player A: {points_A}")
-    print(f"Total points for Player B: {points_B}")
+    if matrix[row][col] == 'A' and player == 'A':
+        print(f"Player A has rolled row={row+1} and col={col+1}.")
+        print(f"OOPS! Player A takes Player B's place.")
+        points_A += 1
+        matrix[row][col] = 'A'
+        print_matrix(matrix)
+    elif matrix[row][col] == 'B' and player == 'B':
+        print(f"Player B has rolled row={row+1} and col={col+1}.")
+        print(f"OOPS! Player B takes Player A's place.")
+        points_B += 1
+        matrix[row][col] = 'B'
+        print_matrix(matrix)
+    else:
+        print(f"Player {player} has rolled row={row+1} and col={col+1}.")
+        matrix[row][col] = player
+        print_matrix(matrix)
 
-    if points_A >= 5 or points_B >= 5:
-        break
+    return points_A, points_B
 
+while points_A < 5 and points_B < 5:
+    points_A, points_B = calculate_points('A', output, points_A, points_B)
+    points_A, points_B = calculate_points('B', output, points_A, points_B)
+
+print("Game Over!")
+print(f"Total points for Player A: {points_A}")
+print(f"Total points for Player B: {points_B}")
 
 
 
@@ -81,331 +78,309 @@ Initial stage:
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
-Player A has rolled row=1 and col=2.
-['*', 'A', '*', '*', '*', '*']
+Player A has rolled row=2 and col=1.
+['*', '*', '*', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
+Player B has rolled row=3 and col=6.
 ['*', '*', '*', '*', '*', '*']
-Player B has rolled row=5 and col=6.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', 'B']
 ['*', '*', '*', '*', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=1 and col=2.
-['*', 'A', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', '*']
+Player A has rolled row=1 and col=3.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', 'B']
 ['*', '*', '*', '*', '*', '*']
-Player B has rolled row=3 and col=5.
-['*', 'A', '*', '*', '*', '*']
 ['*', '*', '*', '*', '*', '*']
+['*', '*', '*', '*', '*', '*']
+Player B has rolled row=4 and col=5.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
+['*', '*', '*', '*', '*', 'B']
 ['*', '*', '*', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', 'B']
 ['*', '*', '*', '*', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=6 and col=3.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', '*']
+Player A has rolled row=3 and col=2.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'B']
 ['*', '*', '*', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', '*', 'B']
+['*', '*', '*', '*', '*', '*']
+Player B has rolled row=4 and col=3.
 ['*', '*', 'A', '*', '*', '*']
-Player B has rolled row=5 and col=2.
-['*', 'A', '*', '*', '*', '*']
+['A', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', '*', '*', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=2 and col=5.
 ['*', '*', 'A', '*', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=3 and col=4.
-['*', 'A', '*', '*', '*', '*']
+['A', '*', '*', '*', 'A', '*']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', 'B', '*', '*', '*', 'B']
-['*', '*', 'A', '*', '*', '*']
 Player B has rolled row=2 and col=4.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['*', 'B', '*', '*', '*', 'B']
 ['*', '*', 'A', '*', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=6 and col=3.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
+['A', '*', '*', 'B', 'A', '*']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', 'B', '*', '*', '*', 'B']
-['*', '*', 'A', '*', '*', '*']
-Player B has rolled row=5 and col=3.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['*', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', '*', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=5 and col=1.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', '*', '*', '*']
-Player B has rolled row=6 and col=4.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', '*', '*']
-Total points for Player A: 0
-Total points for Player B: 0
-Player A has rolled row=6 and col=4.
-OOPS! Player A takes Player B's place.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', '*']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'A', '*', '*']
-Player B has rolled row=2 and col=6.
-['*', 'A', '*', '*', '*', '*']
-['*', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'A', '*', '*']
-Total points for Player A: 1
-Total points for Player B: 0
-Player A has rolled row=1 and col=6.
-['*', 'A', '*', '*', '*', 'A']
-['*', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'A', '*', '*']
-Player B has rolled row=6 and col=4.
-OOPS! Player B takes Player A's place.
-['*', 'A', '*', '*', '*', 'A']
-['*', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', '*', '*']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=2 and col=1.
-['*', 'A', '*', '*', '*', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', '*', '*']
-Player B has rolled row=1 and col=5.
-['*', 'A', '*', '*', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', '*', '*']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=2 and col=1.
-['*', 'A', '*', '*', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', '*', '*']
-Player B has rolled row=6 and col=5.
-['*', 'A', '*', '*', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', '*']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', '*']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=3 and col=6.
-['*', 'A', '*', '*', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', '*']
-Player B has rolled row=1 and col=4.
-['*', 'A', '*', 'B', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', '*']
-Total points for Player A: 1
-Total points for Player B: 1
 Player A has rolled row=6 and col=6.
-['*', 'A', '*', 'B', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', '*']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
 ['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', 'A']
-Player B has rolled row=1 and col=1.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=6 and col=3.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', '*', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', 'A']
-Player B has rolled row=2 and col=3.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', '*', '*', 'B']
-['*', '*', 'A', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=5 and col=4.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'A', '*', 'B']
-['*', '*', 'A', 'B', 'B', 'A']
-Player B has rolled row=6 and col=1.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'A', '*', 'B']
-['B', '*', 'A', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 1
-Player A has rolled row=5 and col=5.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'A', 'A', 'B']
-['B', '*', 'A', 'B', 'B', 'A']
-Player B has rolled row=5 and col=4.
-OOPS! Player B takes Player A's place.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['*', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'A', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 2
-Player A has rolled row=4 and col=1.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'A', 'B', 'B', 'A']
-Player B has rolled row=6 and col=3.
-OOPS! Player B takes Player A's place.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', '*', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 3
-Player A has rolled row=4 and col=5.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
+['*', '*', '*', '*', '*', 'A']
 Player B has rolled row=2 and col=6.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', '*', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 3
-Player A has rolled row=2 and col=2.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', 'A', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
-Player B has rolled row=2 and col=6.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', 'A', 'B', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
-Total points for Player A: 1
-Total points for Player B: 3
-Player A has rolled row=2 and col=3.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', '*', '*', '*', '*', 'A']
+Player A has rolled row=6 and col=2.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['*', 'A', '*', '*', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player B has rolled row=3 and col=4.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['*', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', '*', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player A has rolled row=4 and col=4.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['*', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player B has rolled row=3 and col=1.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player A has rolled row=1 and col=3.
 OOPS! Player A takes Player B's place.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', 'A', 'A', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'A']
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player B has rolled row=3 and col=6.
+OOPS! Player B takes Player A's place.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', '*']
+['*', 'A', '*', '*', '*', 'A']
+Player A has rolled row=5 and col=6.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'A', '*', '*', '*', 'A']
+Player B has rolled row=6 and col=2.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'A']
+Player A has rolled row=2 and col=1.
+OOPS! Player A takes Player B's place.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'A']
 Player B has rolled row=6 and col=6.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=2 and col=1.
+OOPS! Player A takes Player B's place.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=6 and col=2.
 OOPS! Player B takes Player A's place.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', 'A', 'A', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'B']
-Total points for Player A: 2
-Total points for Player B: 4
-Player A has rolled row=2 and col=3.
-['B', 'A', '*', 'B', 'B', 'A']
-['A', 'A', 'A', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'B']
-Player B has rolled row=1 and col=6.
+['*', '*', 'A', '*', '*', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=1 and col=5.
+['*', '*', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=5 and col=6.
+['*', '*', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'B']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=1 and col=2.
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', '*', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'B']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=4 and col=2.
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', '*', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'B']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=3 and col=5.
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'B']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=3 and col=6.
 OOPS! Player B takes Player A's place.
-['B', 'A', '*', 'B', 'B', 'B']
-['A', 'A', 'A', 'B', '*', 'B']
-['*', '*', '*', 'A', 'B', 'A']
-['A', '*', '*', '*', 'A', '*']
-['A', 'B', 'B', 'B', 'A', 'B']
-['B', '*', 'B', 'B', 'B', 'B']
-Total points for Player A: 2
-Total points for Player B: 5
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'B']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=5 and col=6.
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['*', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=5 and col=1.
+['*', 'A', 'A', '*', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=1 and col=4.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'A', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=2 and col=5.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', '*', '*', '*', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=5 and col=5.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', '*', '*', 'A', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=5 and col=3.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'B', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', 'B', '*', 'A', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player A has rolled row=3 and col=4.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', 'B', '*', 'A', 'A']
+['*', 'B', '*', '*', '*', 'B']
+Player B has rolled row=6 and col=1.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', '*']
+['B', '*', 'B', '*', 'A', 'A']
+['B', 'B', '*', '*', '*', 'B']
+Player A has rolled row=4 and col=6.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'A']
+['B', 'B', '*', '*', '*', 'B']
+Player B has rolled row=5 and col=6.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'B']
+['B', 'B', '*', '*', '*', 'B']
+Player A has rolled row=4 and col=6.
+OOPS! Player A takes Player B's place.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'B']
+['B', 'B', '*', '*', '*', 'B']
+Player B has rolled row=6 and col=3.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'B']
+['B', 'B', 'B', '*', '*', 'B']
+Player A has rolled row=1 and col=2.
+OOPS! Player A takes Player B's place.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'B']
+['B', 'B', 'B', '*', '*', 'B']
+Player B has rolled row=6 and col=5.
+['*', 'A', 'A', 'A', 'A', '*']
+['A', '*', '*', 'B', 'B', 'B']
+['B', 'A', '*', 'A', 'A', 'B']
+['*', 'B', 'B', 'A', 'B', 'A']
+['B', '*', 'B', '*', 'A', 'B']
+['B', 'B', 'B', '*', 'B', 'B']
+Game Over!
+Total points for Player A: 5
+Total points for Player B: 3
 '''
