@@ -6,26 +6,15 @@ Eg- input - I am Sayur
 Output I ma ruyaS
 '''
 
-def reverse(sentence):
-    words = sentence.split()
-    reversed_words = []
+sentence = input("Enter a sentence:")
+words = sentence.split()
+for word in words:
+        print(word[::-1],end=" ")  #print the words in reverse order
 
-    for i in words:
-        reversed_word = i[::-1]
-        reversed_words.append(reversed_word)
-
-    reversed_passage = ' '.join(reversed_words)
-    return reversed_passage
-input_sen = "I am Sayur"
-output_sen = reverse(input_sen)
-
-print(f"Input:  {input_sen}")
-print(f"Output: {output_sen}")
-
-
+        
 
 '''
 OUTPUT:-
-Input:  I am Sayur
-Output: I ma ruyaS
+Enter a sentence:I am Sayur
+I ma ruyaS
 '''
