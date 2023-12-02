@@ -10,7 +10,7 @@ def find_between_letters(sentence, letter):
     first_letter_index = sentence.find(letter)
     last_letter_index = sentence.rfind(letter)
 
-    if first_letter_index != -1 and last_letter_index != -1:
+    if first_letter_index != -1 and last_letter_index != -1 and first_letter_index==last_letter_index:
         for i in range(first_letter_index + 1, last_letter_index):
             output += sentence[i]
         print(output)
