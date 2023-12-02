@@ -29,9 +29,7 @@ price = float(input("Enter ticket price: "))
 tickets_sold = int(input("Enter number of tickets sold: "))
 
 total_profit = calculate_profit(ticket_class, price, tickets_sold)
-
-if total_profit is not None:
-    print(f"Total profit for class {ticket_class}: Rs{total_profit:.2f}")
+print(f"Total profit for class {ticket_class}: Rs{total_profit:.2f}")
 
 
 
