@@ -13,15 +13,15 @@ there are many simple answers. you can try with slice function
 '''
 
 
-def is_same(str1, str2):
+def is_same(str1, str2):       #boundary condition
     if (len(str1) != len(str2)):
         return False
-    temp = str1 + str1
-    return (str2 in temp)
+    temp = str1 + str1       #concatenating string1 and string1 temp='ABCDABCD'
+    return (str2 in temp)    #checks for same string 
 
 str1 = "ABCD"
 str2 = "CDAB"
-if (is_same(str1, str2)):
+if (is_same(str1, str2)):      
     print("Strings are same")
 else:
     print("Strings are not same")
