@@ -12,9 +12,9 @@ names=["Pavithra","Abisha","Sanjana","Karthic Selvi","Abirami","DhanuSri","Sange
 marks=[80,53,12,45,32,96,78,23,56,26,3]
 count=0
 print("Passed students:-")
-for i,j in zip(names,marks):  #zip to iterate over two list at a time
+for i,j in zip(names,marks):       #zip to iterate over two list at a time
     if j < 50:
-        count+=1
+        count+=1                   #identifying failed students count
     else:
         print("Name:",i," Mark :",j)
 print("No of failed students :",count)
