@@ -9,10 +9,10 @@ sentence = 'pavi abi pavi pavi abi abi abi pavi a a'
 words = sentence.split()
 dict1 = {}
 
-for i in range(len(words) - 1):
-    if words[i] == words[i + 1]:
-        repeat_word = words[i]
-        if repeat_word in dict1:
+for i in range(len(words) - 1):       #checking upto the word ignoring last word as it comes in if condition
+    if words[i] == words[i + 1]:      #if word == next word
+        repeat_word = words[i]        #if true append in dictionary
+        if repeat_word in dict1:      #to get the count of occurrences
             dict1[repeat_word] += 1
         else:
             dict1[repeat_word] = 1
