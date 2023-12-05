@@ -11,11 +11,11 @@ look at the output and find the pattern. Hint - add next letter in the alphabet 
 
 start = 'a'
 end = 'g'
-temp = start #creating a temporary variable
+temp = start                     #creating a temporary variable
 while start <= end:
     print(temp)
-    start = chr(ord(start) + 1)
-    temp=temp+start+temp
+    start = chr(ord(start) + 1) #assigning the next character
+    temp=temp+start+temp        #printing the previous and next character and previous
 
 
 
