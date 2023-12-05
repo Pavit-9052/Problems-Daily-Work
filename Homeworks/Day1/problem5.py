@@ -15,12 +15,11 @@ Find which class has the best average mark and least number of failed students.
 import heapq
 
 def is_correct(dep, value, total):
-    if len(value) < total:
-        print(f"You have left some marks in class {dep}.")
-        print(f"The total marks is {total}. But you have entered {len(value)} marks.")
-    elif len(value) > total:
-        print(f"You have added some extra marks in class {dep}.")
-        print(f"The total marks is {total}. But you have entered {len(value)} marks.")
+    while len(value) != total:
+        print(f"You have entered an incorrect number of marks for dep {dep}.")
+        print(f"Please enter {total} marks.")
+        value = input(f"Enter the final exam marks of students of dep {dep}:").split(',')
+    print(f"You have entered the correct number of marks for dep {dep}.")
 
 def pass_or_fail(marks):
     passmark = 50
@@ -40,13 +39,14 @@ dep_3_tot = int(input("Enter the no of students in dep 3:"))
 
 # getting their marks in the exam for each department
 print("Enter the marks separated by commas")
-marks_dep_1 = input("Enter the final exam mark of student of dep 1:").split(',')
-cr1 = is_correct(1, marks_dep_1, dep_1_tot)
-marks_dep_2 = input("Enter the final exam mark of student of dep 2:").split(',')
-cr2 = is_correct(2, marks_dep_2, dep_2_tot)
-marks_dep_3 = input("Enter the final exam mark of student of dep 3:").split(',')
-cr3 = is_correct(3, marks_dep_3, dep_3_tot)
+marks_dep_1 = input("Enter the final exam marks of students of dep 1:").split(',')
+is_correct(1, marks_dep_1, dep_1_tot)
+marks_dep_2 = input("Enter the final exam marks of students of dep 2:").split(',')
+is_correct(2, marks_dep_2, dep_2_tot)
+marks_dep_3 = input("Enter the final exam marks of students of dep 3:").split(',')
+is_correct(3, marks_dep_3, dep_3_tot)
 marks_tot = marks_dep_1 + marks_dep_2 + marks_dep_3
+
 
 # finding the maximum 3 marks without sorting
 top_of_dep1 = heapq.nlargest(3, map(int, marks_dep_1))
@@ -90,24 +90,28 @@ print(f"Least number of failed students in total class = {tot_least}")
 '''
 OUTPUT:-
 Enter the no of students in dep 1:5
-Enter the no of students in dep 2:3
-Enter the no of students in dep 3:2
+Enter the no of students in dep 2:4
+Enter the no of students in dep 3:8
 Enter the marks separated by commas
-Enter the final exam mark of student of dep 1:99,45,63,87,98
-Enter the final exam mark of student of dep 2:63,80,71
-Enter the final exam mark of student of dep 3:86,91,73
-You have added some extra marks in class 3.
-The total marks is 2. But you have entered 3 marks.
-The top 3 marks in class 1 = [99, 98, 87]
-The top 3 marks in class 2 = [80, 71, 63]
-The top 3 marks in class 3 = [91, 86, 73]
-The top 3 marks in the total class combination = [99, 98, 91]
-Average mark in class 1 = 86.75
-Average mark in class 2 = 71.33333333333333
-Average mark in class 3 = 83.33333333333333
-Average mark in total classes = 81.1
+Enter the final exam marks of students of dep 1:45,87,63,87,65,98
+You have entered an incorrect number of marks for dep 1.
+Please enter 5 marks.
+Enter the final exam marks of students of dep 1:45,78,87,96,65
+You have entered the correct number of marks for dep 1.
+Enter the final exam marks of students of dep 2:86,96,84,23
+You have entered the correct number of marks for dep 2.
+Enter the final exam marks of students of dep 3:78,63,96,99,54,75,89,41
+You have entered the correct number of marks for dep 3.
+The top 3 marks in class 1 = [98, 87, 87]
+The top 3 marks in class 2 = [96, 86, 84]
+The top 3 marks in class 3 = [99, 96, 89]
+The top 3 marks in the total class combination = [99, 98, 96]
+Average mark in class 1 = 80.0
+Average mark in class 2 = 88.66666666666667
+Average mark in class 3 = 79.14285714285714
+Average mark in total classes = 81.33333333333333
 Least number of failed students in class 1 = 1
-Least number of failed students in class 2 = 0
-Least number of failed students in class 3 = 0
-Least number of failed students in total class = 1
+Least number of failed students in class 2 = 1
+Least number of failed students in class 3 = 1
+Least number of failed students in total class = 3
 '''
