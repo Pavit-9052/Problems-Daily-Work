@@ -18,7 +18,8 @@ for i in input:
 while count_duplicate!=0: #To print the underscores
     output.append("_")
     count_duplicate-=1
-print(output)
+print("The input:",input)
+print("The output:",output)
 
 
 '''
