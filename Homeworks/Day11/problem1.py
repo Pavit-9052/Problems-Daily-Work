@@ -31,6 +31,21 @@ def is_ip4_address(ip):
     else:
         print("Valid IP4 address")
 
+def is_ip6_address(ip):
+    print("Input address:", ip)
+    address = ip.lower().split(":")
+    address = address[:-1]
+    for i in address:
+        if not i.isalnum():
+            print("Invalid address")
+            break
+        elif not all(c in "abcdef" for c in i):
+            print("Invalid address range")
+            break
+    else:
+        print("Valid IPv6 address")
+
+
 
 ip_1 = "192.58.1.3u."
 is_ip4_address(ip_1)
@@ -38,6 +53,10 @@ ip_2 = "192.58.1.35."
 is_ip4_address(ip_2)
 ip_3 = "192.58.1.335."
 is_ip4_address(ip_3)
+
+ip_4 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+is_ip6_address(ip_4)
+
 
 
 OUTPUT:-
@@ -47,5 +66,6 @@ Input address: 192.58.1.35.
 Valid IP4 address
 Input address: 192.58.1.335.
 Invalid address range
-
+Input address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+Invalid address range
 
