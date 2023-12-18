@@ -25,7 +25,7 @@ def is_ip4_address(ip):
         if not i.isdigit():
             print("Invalid address range")
             break
-        elif not (0 <= int(i) <= 255):
+        elif not (0 <= int(i) <= 255): #It exists from 0 to 255
             print("Invalid address range")
             break
     else:
