@@ -21,7 +21,7 @@ for item in list_input:
 for k in dictionary:       #Iterating over dictionary
     if dictionary[k]>= key: #Check if value is graeter than or equal to key
         output.append(k)
-print(output)
+print("The output is:",output)
 
 
 
