@@ -20,10 +20,10 @@ The range value exceeds from 0 to FFFF.
 def is_ip4_address(ip):
     print("Input address:",ip)
     address = ip.split(".")
-    address = address[:-1]
+    address = address[:-1] #To avoid the last : in IP address
     for i in address:
         if not i.isdigit():
-            print("Invalid address")
+            print("Invalid address range")
             break
         elif not (0 <= int(i) <= 255):
             print("Invalid address range")
@@ -33,13 +33,14 @@ def is_ip4_address(ip):
 
 def is_ip6_address(ip):
     print("Input address:", ip)
-    address = ip.lower().split(":")
+    address = ip.lower().split(":")#To avoid the last : in IP address
     address = address[:-1]
     for i in address:
         if not i.isalnum():
-            print("Invalid address")
+            print("Invalid address range")
             break
-        elif not all(c in "abcdef" for c in i):
+        elif not all(c in "abcdef" for c in i): 
+        #Hexadecimal numbers are from 0 to abcdef so checking in "abcdef
             print("Invalid address range")
             break
     else:
