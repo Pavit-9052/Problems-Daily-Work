@@ -1,0 +1,96 @@
+CREATE DATABASE IF NOT EXISTS bookstore;
+USE bookstore;
+
+CREATE TABLE authors (
+  author_id INT PRIMARY KEY,
+  author_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE books (
+  book_id INT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  genre VARCHAR(50),
+  price DECIMAL(8, 2),
+  author_id INT,
+  FOREIGN KEY (author_id) REFERENCES authors(author_id)
+);
+CREATE TABLE customers (
+  customer_id INT PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  email VARCHAR(255),
+  city VARCHAR(50),
+  state VARCHAR(50)
+);
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  total_amount DECIMAL(10, 2),
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+CREATE TABLE order_details (
+  order_detail_id INT PRIMARY KEY,
+  order_id INT,
+  book_id INT,
+  quantity INT,
+  unit_price DECIMAL(8, 2),
+  FOREIGN KEY (order_id) REFERENCES orders(order_id),
+  FOREIGN KEY (book_id) REFERENCES books(book_id)
+);
+show tables;
+
+INSERT INTO authors VALUES (1, 'Ruskin Bond');
+INSERT INTO authors VALUES (2, 'Arundhati Roy');
+INSERT INTO authors VALUES (3, 'Chetan Bhagat');
+
+-- Books
+INSERT INTO books VALUES (101, 'The Blue Umbrella', 'Fiction', 150.00, 1);
+INSERT INTO books VALUES (102, 'The God of Small Things', 'Fiction', 250.00, 2);
+INSERT INTO books VALUES (103, 'Five Point Someone', 'Fiction', 180.00, 3);
+
+-- Customers
+INSERT INTO customers VALUES (1, 'Raj Kumar', 'raj@example.com', 'Delhi', 'Delhi');
+INSERT INTO customers VALUES (2, 'Sneha Verma', 'sneha@example.com', 'Mumbai', 'Maharashtra');
+INSERT INTO customers VALUES (3, 'Kumar Singh', 'kumar@example.com', 'Kolkata', 'West Bengal');
+
+-- Orders
+INSERT INTO orders VALUES (1001, 1, '2023-01-15', 400.00);
+INSERT INTO orders VALUES (1002, 2, '2023-02-20', 250.00);
+INSERT INTO orders VALUES (1003, 3, '2023-03-05', 180.00);
+
+-- OrderDetails
+INSERT INTO order_details VALUES (2001, 1001, 101, 2, 150.00);
+INSERT INTO order_details VALUES (2002, 1002, 102, 1, 250.00);
+INSERT INTO order_details VALUES (2003, 1003, 103, 1, 180.00);
+
+-- Tamil Authors
+INSERT INTO authors VALUES (4, 'Kalki Krishnamurthy');
+INSERT INTO authors VALUES (5, 'Jayakanthan');
+INSERT INTO authors VALUES (6, 'Perumal Murugan');
+
+-- Books by Tamil Authors
+INSERT INTO books VALUES (104, 'Ponniyin Selvan', 'Historical Fiction', 200.00, 4);
+INSERT INTO books VALUES (105, 'Sila Nerangalil Sila Manidhargal', 'Novel', 180.00, 5);
+INSERT INTO books VALUES (106, 'Poonachi', 'Fiction', 150.00, 6);
+
+-- Customers from Tamil Nadu
+-- Assuming customers may be interested in books by Tamil authors
+INSERT INTO customers VALUES (7, 'Karthik Raja', 'karthik@example.com', 'Chengalpattu', 'Tamil Nadu');
+INSERT INTO customers VALUES (8, 'Ananya Balaji', 'ananya@example.com', 'Kanchipuram', 'Tamil Nadu');
+INSERT INTO customers VALUES (9, 'Ramesh Subramanian', 'ramesh@example.com', 'Vellore', 'Tamil Nadu');
+
+-- Orders for Books by Tamil Authors
+INSERT INTO orders VALUES (1007, 7, '2023-04-05', 350.00);
+INSERT INTO orders VALUES (1008, 8, '2023-04-10', 200.00);
+INSERT INTO orders VALUES (1009, 9, '2023-04-15', 330.00);
+INSERT INTO orders VALUES (1010, 9, '2023-05-15', 200.00);
+delete from order_details where order_detail_id = 2010;
+
+
+-- OrderDetails for Books by Tamil Authors
+INSERT INTO order_details VALUES (2007, 1007, 104, 1, 200.00);
+INSERT INTO order_details VALUES (2008, 1008, 105, 2, 100.00); -- Assuming a discount
+INSERT INTO order_details VALUES (2009, 1009, 106, 1, 330.00);
+insert into order_details values(2010, 1010, 105, 2, 100.00);
+delete from orders where order_id=1010;
+
