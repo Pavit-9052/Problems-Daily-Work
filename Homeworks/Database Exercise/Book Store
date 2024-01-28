@@ -94,3 +94,56 @@ INSERT INTO order_details VALUES (2009, 1009, 106, 1, 330.00);
 insert into order_details values(2010, 1010, 105, 2, 100.00);
 delete from orders where order_id=1010;
 
+
+desc authors;
+select * from authors;
+
+
+select authors.author_name, books.title
+from authors
+join books on authors.author_id=books.author_id;
+
+
+select customers.customer_name , sum(orders.total_amount)
+from customers
+join orders on customers.customer_id = orders.customer_id
+group by customers.customer_name;
+
+select title, price from books
+where price > 200.00;
+
+select customer_name, city
+from customers
+where city = 'Mumbai';
+
+select customer_name, city
+from customers
+where state = 'Tamil Nadu';
+
+select title, price
+from books
+where price = (select MAX(price) from books);
+
+select order_id, order_date
+from orders
+where month(order_date) = 4 and year(order_date) = 2023;
+
+select genre , count(price)
+from books
+group by genre;
+
+
+select distinct customers.customer_name
+from customers
+join orders on customers.customer_id = orders.customer_id
+join order_details on orders.order_id = order_details.order_id
+join books on order_details.book_id = books.book_id
+where books.book_id in (104,105,106);
+
+
+select authors.author_name
+from authors
+join books on authors.author_id = books.author_id
+where books.price > 150.00 and books.book_id in (104,105,106);
+
+select count(*) from books;
